@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View} from 'react-native';
 import { Provider as PaperProvider, Text, Button } from 'react-native-paper';
+import { NavigationContainer } from '@react-navigation/native-stack';
 
 export default function HomeScreen({navigation}){
 
@@ -44,23 +45,35 @@ export default function HomeScreen({navigation}){
         <PaperProvider>
             <View style={styles.container}>
                 <View style={styles.shareProfileContainer}>
-                    <Button mode = 'contained' buttonColor='#726D65' style={styles.shareANDprofile}>
+                    <Button mode = 'contained' buttonColor='#726D65' style={styles.shareANDprofile}
+                        onPress={() =>
+                            navigation.navigate('Share')
+                        }>
                         Share
                     </Button>
                     <Button mode = 'text' icon = 'account-circle' textColor='#fff' style={styles.shareANDprofile}
                         onPress={() =>
-                            navigation.navigate('UserProfile')
+                            navigation.navigate('User Profile')
                         }>
                         Profile
                     </Button>
                 </View>
-                <Button mode = 'contained' buttonColor='#D90000' style={styles.helpButtons}>
+                <Button mode = 'contained' buttonColor='#D90000' style={styles.helpButtons}
+                    onPress={() =>
+                        navigation.navigate('Request Ambulance')
+                    }>
                     Request Ambulance
                 </Button>
-                <Button mode = 'contained' buttonColor='#D98200' style={styles.helpButtons}>
+                <Button mode = 'contained' buttonColor='#D98200' style={styles.helpButtons}
+                    onPress={() =>
+                        navigation.navigate('Locate Naloxone Carriers')
+                    }>
                     Request Nearby Help
                 </Button>
-                <Button mode = 'contained' buttonColor='#726D65' style={styles.findNaloxone}>
+                <Button mode = 'contained' buttonColor='#726D65' style={styles.findNaloxone}
+                    onPress={() =>
+                        navigation.navigate('Locate Naloxone Suppliers')
+                    }>
                     Find Naloxone and Training
                 </Button>
                 
