@@ -18,25 +18,42 @@ export default function HomeScreen({navigation}){
             display: 'flex',
             flexDirection: 'row',
             width: '100%',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            marginBottom: 65
         },
 
         shareANDprofile: {
-            marginLeft: 15,
-            marginRight: 15
+            marginLeft: 25,
+            marginRight: 25,
         },
 
         helpButtons: {
-            marginBottom: 50,
-            marginTop: 50,
-            marginLeft: 25,
-            marginRight: 25,
-            alignItems: 'center',
-            hight: 100
+            marginTop: 40,
+            marginLeft: 30,
+            marginRight: 30,
+            alignItems: 'center'
+        },
+
+        HelpButtonsSize: {
+           height: 150
+        },
+
+        HelpButtonsText: {
+            fontSize: 22
         },
 
         findNaloxone: {
+            marginTop: 80,
+            marginLeft: 75,
+            marginRight: 75
+        },
 
+        findNaloxoneSize: {
+            height: 60
+        },
+
+        findNaloxoneText: {
+            fontSize: 15
         }
 
     })
@@ -45,32 +62,40 @@ export default function HomeScreen({navigation}){
         <PaperProvider>
             <View style={styles.container}>
                 <View style={styles.shareProfileContainer}>
-                    <Button mode = 'contained' buttonColor='#726D65' style={styles.shareANDprofile}
+                    <Button mode = 'contained' buttonColor='#726D65' 
+                        style={styles.shareANDprofile}
                         onPress={() =>
                             navigation.navigate('Share')
                         }>
                         Share
                     </Button>
-                    <Button mode = 'text' icon = 'account-circle' textColor='#fff' style={styles.shareANDprofile}
+                    <Button mode = 'outlined' icon = 'account-circle' textColor='#fff' 
+                        style={styles.shareANDprofile} contentStyle={{flexDirection: 'row-reverse'}}
                         onPress={() =>
                             navigation.navigate('User Profile')
                         }>
                         Profile
                     </Button>
                 </View>
-                <Button mode = 'contained' buttonColor='#D90000' style={styles.helpButtons}
+                <Button mode = 'contained' buttonColor='#D90000' 
+                    style={styles.helpButtons} contentStyle={styles.HelpButtonsSize}
+                    labelStyle={styles.HelpButtonsText}
                     onPress={() =>
                         navigation.navigate('Request Ambulance')
                     }>
                     Request Ambulance
                 </Button>
-                <Button mode = 'contained' buttonColor='#D98200' style={styles.helpButtons}
+                <Button mode = 'contained' buttonColor='#D98200' 
+                    style={styles.helpButtons} contentStyle={styles.HelpButtonsSize}
+                    labelStyle={styles.HelpButtonsText}
                     onPress={() =>
                         navigation.navigate('Locate Naloxone Carriers')
                     }>
                     Request Nearby Help
                 </Button>
-                <Button mode = 'contained' buttonColor='#726D65' style={styles.findNaloxone}
+                <Button mode = 'contained' buttonColor='#726D65' 
+                    style={styles.findNaloxone} contentStyle={styles.findNaloxoneSize}
+                    labelStyle={styles.findNaloxoneText}
                     onPress={() =>
                         navigation.navigate('Locate Naloxone Suppliers')
                     }>
