@@ -33,6 +33,8 @@ export default function LocateNaloxoneSuppliers({navigation}){
      let lat = Number(text['coords']['latitude']);
      let long = Number(text['coords']['longitude']);
 
+     let markerList = [{latitude: Number(lat)-0.0005, longitude: Number(long)-0.0005, title: "Dave's Pharmacy", desc: "Pharmacist", phone: "250-556-1345", url: "www.davespharmacy.ca"}, {latitude: Number(lat)+0.0005, longitude: Number(long)-0.0005, title: "Jill's Pharmacy", desc: "Pharmacist", phone: "250-364-3412", url: "www.jillspharmacy.ca"}];
+
      return (
        <View style ={styles.container}>
          <MapView style={styles.map}
@@ -49,24 +51,28 @@ export default function LocateNaloxoneSuppliers({navigation}){
             }}
             title="Your location"
           />
-          <Marker
-            coordinate ={{
-              latitude: Number(lat)+0.0005,
-              longitude: Number(long)+0.0005,
-            }}>
-            <Callout>
-              <View>
-                <View style={styles.bubble}>
-                  <Text style={styles.titleText}>Dave Pharmacy</Text>
-                  <Text style={styles.baseText}>Pharmacist</Text>
-                  <Text style={styles.baseText}>250-556-1345</Text>
-                  <Text style={{color: 'blue'}} onPressed={() => Linking.openURL('www.google.ca')}>
-                    www.davespharmacy.ca
-                  </Text>
-                </View>
-              </View>
-            </Callout>
-          </Marker>
+          {markerList.map((marker, index) => (
+              <Marker
+                coordinate ={{
+                  latitude: marker.latitude,
+                  longitude: marker.longitude,
+                }}
+                key={index}>
+                <Callout>
+                  <View>
+                    <View style={styles.bubble}>
+                      <Text style={styles.titleText}>{marker.title}</Text>
+                      <Text style={styles.baseText}>{marker.desc}</Text>
+                      <Text style={styles.baseText}>{marker.phone}</Text>
+                      <Text style={{color: 'blue'}} onPressed={() => Linking.openURL('www.google.ca')}>
+                        {marker.url}
+                      </Text>
+                    </View>
+                  </View>
+                </Callout>
+              </Marker>
+          ))}
+
          </MapView>
        </View>
      );
