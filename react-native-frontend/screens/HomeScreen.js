@@ -62,7 +62,7 @@ export default function HomeScreen({navigation}){
         <PaperProvider>
             <View style={styles.container}>
                 <View style={styles.shareProfileContainer}>
-                    <Button mode = 'contained' buttonColor='#726D65' 
+                    <Button mode = 'contained' buttonColor='#726D65' textColor='#fff'
                         style={styles.shareANDprofile}
                         onPress={() =>
                             navigation.navigate('Share')
@@ -77,7 +77,7 @@ export default function HomeScreen({navigation}){
                         Profile
                     </Button>
                 </View>
-                <Button mode = 'contained' buttonColor='#D90000' 
+                <Button mode = 'contained' buttonColor='#D90000' textColor='#fff'
                     style={styles.helpButtons} contentStyle={styles.HelpButtonsSize}
                     labelStyle={styles.HelpButtonsText}
                     onPress={() =>
@@ -85,7 +85,7 @@ export default function HomeScreen({navigation}){
                     }>
                     Request Ambulance
                 </Button>
-                <Button mode = 'contained' buttonColor='#D98200' 
+                <Button mode = 'contained' buttonColor='#D98200' textColor='#fff'
                     style={styles.helpButtons} contentStyle={styles.HelpButtonsSize}
                     labelStyle={styles.HelpButtonsText}
                     onPress={() =>
@@ -93,7 +93,7 @@ export default function HomeScreen({navigation}){
                     }>
                     Request Nearby Help
                 </Button>
-                <Button mode = 'contained' buttonColor='#726D65' 
+                <Button mode = 'contained' buttonColor='#726D65' textColor='#fff'
                     style={styles.findNaloxone} contentStyle={styles.findNaloxoneSize}
                     labelStyle={styles.findNaloxoneText}
                     onPress={() =>
