@@ -1,12 +1,61 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { StyleSheet, Touchable, View, TouchableOpacity} from 'react-native';
 import { Provider as PaperProvider, Text, TextInput, Button } from 'react-native-paper';
 
 
-export default function UserProfile({navigation}){
+export default class UserProfile extends Component {
 
-    const [name, nChange] = React.useState("Joe Guy");
-    const [quantity, qChange] = React.useState("4");
+    //const [name, nChange] = React.useState("Joe Guy");
+    //const [quantity, qChange] = React.useState("4");
+
+    state = {
+        name: '',
+        quantity: '',
+        avaliability: ''
+
+    }
+
+    handleName = (text) => {
+        this.setState({name: text})
+    }
+    handleQuantity = (text) => {
+        this.setState({quantity: text})
+    }
+    handleAvaliability = (text) => {
+        this.setState({avaliability: text})
+    }
+    saveInfo = (name, quantity, avaliablity) => {
+        alert('name: ' + name + 'quantity: ' + quantity + 'avaliability: ' + avaliablity)
+    }
+
+    render() {
+        return (
+            <PaperProvider>
+                <View style={styles.container}>
+                    <TextInput
+                        style={styles.textbox1}
+                        placeholder = 'Joe Guy'
+                        onChangeText={this.handleName}
+                    />
+                    <TextInput
+                        style={styles.textbox2}
+                        placeholder = '4'
+                        onChangeText={this.handleQuantity}
+                    />
+                    <TouchableOpacity
+                        style={styles.saveButton}
+                        onPress = {
+                            () => this.saveInfo(this.state.name, this.state.quantity, this.state.avaliability)
+                        }
+                    >
+                        <Text>Save</Text>
+                    </TouchableOpacity>
+                </View>
+            </PaperProvider>
+        )
+    }
+    
+}
 
     const styles = StyleSheet.create({
         container: {
@@ -42,25 +91,3 @@ export default function UserProfile({navigation}){
         }
 
     })
-    return (
-        <PaperProvider>
-            <View style={styles.container}>
-                <TextInput
-                    style={styles.textbox1}
-                    onChangeText={nChange}
-                    value={name}
-                />
-                <TextInput
-                    style={styles.textbox2}
-                    onChangeText={qChange}
-                    value={quantity}
-                />
-                <TouchableOpacity
-                    style={styles.saveButton}
-                >
-                    <Text>Save</Text>
-                </TouchableOpacity>
-            </View>
-        </PaperProvider>
-    );
-}
