@@ -11,8 +11,8 @@ export default class UserProfile extends Component {
     state = {
         name: '',
         quantity: '',
-        avaliability: ''
-
+        avaliability: '',
+        editDisabled: 1
     }
 
     handleName = (text) => {
@@ -32,24 +32,57 @@ export default class UserProfile extends Component {
         return (
             <PaperProvider>
                 <View style={styles.container}>
+                    <Text style={styles.text1}>User Name</Text>
                     <TextInput
                         style={styles.textbox1}
                         placeholder = 'Joe Guy'
+                        disabled={this.state.editDisabled}
                         onChangeText={this.handleName}
                     />
+                    <Text style={styles.text2}>Naloxone Quantity</Text>
                     <TextInput
                         style={styles.textbox2}
                         placeholder = '4'
+                        disabled={this.state.editDisabled}
                         onChangeText={this.handleQuantity}
                     />
-                    <TouchableOpacity
-                        style={styles.saveButton}
+
+                    <View style={styles.availContainer}>
+
+                        <View style={styles.inputContainer}>
+                            
+                            <View style={{width: '50%'}}>
+                                <Text style={styles.text1}>Weekday Availability</Text>
+                                <TextInput style={styles.textbox1} disabled={this.state.editDisabled}>
+
+                                </TextInput>
+                            </View>
+                            <View style={{width: '50%'}}>
+                                <Text style={styles.text1}>Weekend Availability</Text>
+                                <TextInput style={styles.textbox1} disabled={this.state.editDisabled}>
+                                    
+                                </TextInput>
+                            </View>
+
+                        </View>
+                    </View>
+
+                    <Button
+                        style={styles.saveButton} contentStyle={styles.saveButtonSize} labelStyle={{fontSize:22}}
                         onPress = {
                             () => this.saveInfo(this.state.name, this.state.quantity, this.state.avaliability)
                         }
                     >
-                        <Text>Save</Text>
-                    </TouchableOpacity>
+                        Save
+                    </Button>
+                    <Button
+                        style={styles.editButton} contentStyle={styles.saveButtonSize} labelStyle={{fontSize:22}}
+                        onPress = {
+                            () => this.saveInfo(this.state.name, this.state.quantity, this.state.avaliability)
+                        }
+                    >
+                        Edit
+                    </Button>
                 </View>
             </PaperProvider>
         )
@@ -67,27 +100,58 @@ export default class UserProfile extends Component {
 
         textbox1: {
             height: 40,
-            marginTop: 12,
+            marginTop: 5,
             marginLeft: 15,
             marginRight: 15,
             borderWidth: 1,
             padding: 10
         },
+
         textbox2: {
             height: 40,
-            marginTop: 60,
+            marginTop: 5,
             marginLeft: 15,
             marginRight: 15,
             borderWidth: 1,
             padding: 10
         },
+
+        text1:{
+            marginTop: 12,
+            marginLeft: 17,
+            marginRight: 17,
+            fontSize:15
+        },
+
+        text2:{
+            marginTop: 60,
+            marginLeft: 17,
+            marginRight: 17,
+            fontSize:15
+        },
+
         saveButton: {
             backgroundColor: '#7a42f4',
             alignItems: "center",
-            fontSize: 25,
-            padding: 10,
-            margin: 80,
-            height: 60
-        }
+            marginTop: 80,
+            marginBottom: 80,
+            marginRight: 50,
+            marginLeft: 50
+        },
+
+        saveButtonSize: {
+            height: 60,
+        },
+
+        editButton: {
+            backgroundColor: '#0d7cd6',
+            alignItems: "center",
+            marginBottom: 80,
+            marginRight: 50,
+            marginLeft: 50
+        },
+
+        availContainer: {display: "flex", flexDirection: "column", marginTop: 60,},
+        inputContainer: {display: "flex", flexDirection: "row"}
 
     })
