@@ -80,8 +80,13 @@ export default function LocateNaloxoneSuppliers({navigation}){
         if(location){
           setLat(Number(location['coords']['latitude']));
           setLong(Number(location['coords']['longitude']));
-          let markerListCand = [{latitude: Number(location['coords']['latitude'])-0.0005, longitude: Number(location['coords']['longitude'])-0.0005, title: "Dave's Pharmacy", desc: "Pharmacist", phone: "250-556-1345", url: "www.davespharmacy.ca"}, {latitude: Number(location['coords']['latitude'])+0.0005, longitude: Number(location['coords']['longitude'])-0.0005, title: "Jill's Pharmacy", desc: "Pharmacist", phone: "250-364-3412", url: "www.jillspharmacy.ca"}];
-          //let markerListCand = [];
+          let markerListCand = [];
+
+
+          // quick conditional in order to demonstraight both behaviours of the usecase
+          if(Math.floor(Math.random()*2)){
+              markerListCand = [{latitude: Number(location['coords']['latitude'])-0.0005, longitude: Number(location['coords']['longitude'])-0.0005, title: "Dave's Pharmacy", desc: "Pharmacist", phone: "250-556-1345", url: "www.davespharmacy.ca"}, {latitude: Number(location['coords']['latitude'])+0.0005, longitude: Number(location['coords']['longitude'])-0.0005, title: "Jill's Pharmacy", desc: "Pharmacist", phone: "250-364-3412", url: "www.jillspharmacy.ca"}];
+          }
           if(markerListCand.length < 1){
             let text = await createNoLocationsAlert();
           }
