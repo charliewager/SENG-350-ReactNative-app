@@ -7,14 +7,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default class UserProfile extends Component {
     
 
-    //const [name, nChange] = React.useState("Joe Guy");
-    //const [quantity, qChange] = React.useState("4");
-
     state = {
         name: 'johnny',
-        quantity: '1blade',
-        weekdayA: 'today',
-        weekendA: 'tomorrow',
+        quantity: '1',
+        weekdayA: 'sometimes',
+        weekendA: 'never',
         editDisabled: 1
     }
 
@@ -36,7 +33,7 @@ export default class UserProfile extends Component {
     handleDisabled = () => {
         this.setState({editDisabled: 1})
     }
-    saveInfo = (name, quantity, weekdayA, weekendA) => {
+    saveInfo = (name, quantity, weekdayA, weekendA) => { //i think this is a dead function
         storeData(name, quantity, weekdayA, weekendA)
         alert('name: ' + name + ', quantity: ' + quantity + ', weekday avaliability: ' + weekdayA + ', weekend avaliability' + weekendA)
     }
@@ -50,14 +47,14 @@ export default class UserProfile extends Component {
                     <Text style={styles.text1}>User Name</Text>
                     <TextInput
                         style={styles.textbox1}
-                        defaultValue={'Johnny'}
+                        defaultValue={this.state.name} //right now its grabbing the default value from the states above
                         disabled={this.state.editDisabled}
                         onChangeText={this.handleName}
                     />
                     <Text style={styles.text2}>Naloxone Quantity</Text>
                     <TextInput
                         style={styles.textbox2}
-                        defaultValue={'1blade'}
+                        defaultValue={this.state.quantity}
                         disabled={this.state.editDisabled}
                         onChangeText={this.handleQuantity}
                     />
@@ -68,13 +65,13 @@ export default class UserProfile extends Component {
                             
                             <View style={{width: '50%'}}>
                                 <Text style={styles.text1}>Weekday Availability</Text>
-                                <TextInput style={styles.textbox1} defaultValue={'allday'} disabled={this.state.editDisabled} onChangeText={this.handleweekdayA}>
+                                <TextInput style={styles.textbox1} defaultValue={this.state.weekdayA} disabled={this.state.editDisabled} onChangeText={this.handleweekdayA}>
 
                                 </TextInput>
                             </View>
                             <View style={{width: '50%'}}>
                                 <Text style={styles.text1}>Weekend Availability</Text>
-                                <TextInput style={styles.textbox1} defaultValue={'everyday'} disabled={this.state.editDisabled} onChangeText={this.handleweekendA}>
+                                <TextInput style={styles.textbox1} defaultValue={this.state.weekendA} disabled={this.state.editDisabled} onChangeText={this.handleweekendA}>
                                     
                                 </TextInput>
                             </View>
@@ -86,6 +83,7 @@ export default class UserProfile extends Component {
                         style={styles.saveButton} contentStyle={styles.saveButtonSize} labelStyle={{fontSize:22}}
                         onPress = {
                             () => {
+                                // this function below is the one that takes all the info currently in the states and saves it to the json file
                                 storeData(this.state.name, this.state.quantity, this.state.weekdayA, this.state.weekendA)
                                 //this.saveInfo(this.state.name, this.state.quantity, this.state.avaliability)
                                 this.handleDisabled()
@@ -99,8 +97,18 @@ export default class UserProfile extends Component {
                         style={styles.editButton} contentStyle={styles.saveButtonSize} labelStyle={{fontSize:22}}
                         onPress = {
                             () => {
+                                //for whatever reason the handle x functions dont like recieving functions so i made constants to get the values
+                                //from the json file and then pass them into the handleValue functions, this is possibly where some problem occurs
+                                const N = getName()
+                                const Q = getQuantity()
+                                const D = getweekdayA()
+                                const E = getweekendA()
+                                this.handleName(N)
+                                this.handleQuantity(Q)
+                                this.handleweekdayA(D)
+                                this.handleweekendA(E)
                                 this.handleEnabled()
-                                getData()
+                                //getData()
                                 //this.saveInfo(this.state.name, this.state.quantity, this.state.avaliability)
                             }
                         }
@@ -112,37 +120,87 @@ export default class UserProfile extends Component {
         )
     }
     
-    
 }
-
 const storeData = async (value1, value2, value3, value4) => {
     try{
+        //recieves the values to store and turns them into strings, storing them in the file
         await AsyncStorage.setItem('name', JSON.stringify(value1))
         await AsyncStorage.setItem('quantity', JSON.stringify(value2))
         await AsyncStorage.setItem('weekdayA', JSON.stringify(value3))
         await AsyncStorage.setItem('weekendA', JSON.stringify(value4))
     } catch (e) {
-        alert('error: data could not be read')
+        alert('error: data could not be stored')
     }
 };
 
-const getData = async () => {
+// const getData = async () => {
+//     try {
+//         const value1 = await AsyncStorage.getItem('name');
+//         const value2 = await AsyncStorage.getItem('quantity');
+//         const value3 = await AsyncStorage.getItem('weekdayA');
+//         const value4 = await AsyncStorage.getItem('weekendA');
+//         if (value1 !== null){
+//             UserProfile.handleName(value1)
+//         }
+//         if (value2 !== null){
+//             UserProfile.handleQuantity(value2)
+//         }
+//         if (value3 !== null){
+//             UserProfile.handleweekdayA(value3)
+//         }
+//         if (value4 !== null){
+//             UserProfile.handleweekendA(value4)
+//         }
+//     } catch (e) {
+//         alert('failed to read input from storage')
+//     }
+    
+// };
+
+//below are all the various store file functions, with alerts to indicate that the values are properly stored and read again
+const getName = async () => {
     try {
-        const value1 = await AsyncStorage.getItem('name');
-        const value2 = await AsyncStorage.getItem('quantity');
-        const value3 = await AsyncStorage.getItem('weekdayA');
-        const value4 = await AsyncStorage.getItem('weekendA');
-        if (value1 !== null){
-            handleName(value1)
+        const value = await AsyncStorage.getItem('name');
+        if (value !== null){
+            alert(value)
+            return (value)
         }
-        if (value2 !== null){
-            handleQuantity(value2)
+    } catch (e) {
+        alert('failed to read input from storage')
+    }
+    
+};
+const getQuantity = async () => {
+    try {
+        const value = await AsyncStorage.getItem('quantity');
+        //alert('this is a test')
+        if (value !== null){
+            alert(value)
+            return (value)
         }
-        if (value3 !== null){
-            handleweekdayA(value3)
+    } catch (e) {
+        alert('failed to read input from storage')
+    }
+    
+};
+const getweekdayA = async () => {
+    try {
+        const value = await AsyncStorage.getItem('weekdayA');
+        if (value !== null){
+            alert(value)
+            return (value)
         }
-        if (value4 !== null){
-            handleweekendA(value4)
+    } catch (e) {
+        alert('failed to read input from storage')
+    }
+    
+};
+const getweekendA = async () => {
+    try {
+        const value = await AsyncStorage.getItem('weekendA');
+        if (value !== null){
+            alert(value)
+            return (value)
         }
     } catch (e) {
         alert('failed to read input from storage')
@@ -150,6 +208,11 @@ const getData = async () => {
     
 };
 
+
+
+
+
+    
 
     const styles = StyleSheet.create({
         container: {
