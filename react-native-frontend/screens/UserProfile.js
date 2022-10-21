@@ -1,17 +1,20 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect} from 'react';
 import { StyleSheet, Touchable, View, TouchableOpacity} from 'react-native';
 import { Provider as PaperProvider, Text, TextInput, Button } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default class UserProfile extends Component {
+    
 
     //const [name, nChange] = React.useState("Joe Guy");
     //const [quantity, qChange] = React.useState("4");
 
     state = {
-        name: '',
-        quantity: '',
-        avaliability: '',
+        name: 'johnny',
+        quantity: '1blade',
+        weekdayA: 'today',
+        weekendA: 'tomorrow',
         editDisabled: 1
     }
 
@@ -21,28 +24,40 @@ export default class UserProfile extends Component {
     handleQuantity = (text) => {
         this.setState({quantity: text})
     }
-    handleAvaliability = (text) => {
-        this.setState({avaliability: text})
+    handleweekdayA = (text) => {
+        this.setState({weekdayA: text})
     }
-    saveInfo = (name, quantity, avaliablity) => {
-        alert('name: ' + name + 'quantity: ' + quantity + 'avaliability: ' + avaliablity)
+    handleweekendA = (text) => {
+        this.setState({weekendA: text})
+    }
+    handleEnabled = () => {
+        this.setState({editDisabled: 0})
+    }
+    handleDisabled = () => {
+        this.setState({editDisabled: 1})
+    }
+    saveInfo = (name, quantity, weekdayA, weekendA) => {
+        storeData(name, quantity, weekdayA, weekendA)
+        alert('name: ' + name + ', quantity: ' + quantity + ', weekday avaliability: ' + weekdayA + ', weekend avaliability' + weekendA)
     }
 
+
     render() {
+
         return (
             <PaperProvider>
                 <View style={styles.container}>
                     <Text style={styles.text1}>User Name</Text>
                     <TextInput
                         style={styles.textbox1}
-                        placeholder = 'Joe Guy'
+                        defaultValue={'Johnny'}
                         disabled={this.state.editDisabled}
                         onChangeText={this.handleName}
                     />
                     <Text style={styles.text2}>Naloxone Quantity</Text>
                     <TextInput
                         style={styles.textbox2}
-                        placeholder = '4'
+                        defaultValue={'1blade'}
                         disabled={this.state.editDisabled}
                         onChangeText={this.handleQuantity}
                     />
@@ -53,13 +68,13 @@ export default class UserProfile extends Component {
                             
                             <View style={{width: '50%'}}>
                                 <Text style={styles.text1}>Weekday Availability</Text>
-                                <TextInput style={styles.textbox1} disabled={this.state.editDisabled}>
+                                <TextInput style={styles.textbox1} defaultValue={'allday'} disabled={this.state.editDisabled} onChangeText={this.handleweekdayA}>
 
                                 </TextInput>
                             </View>
                             <View style={{width: '50%'}}>
                                 <Text style={styles.text1}>Weekend Availability</Text>
-                                <TextInput style={styles.textbox1} disabled={this.state.editDisabled}>
+                                <TextInput style={styles.textbox1} defaultValue={'everyday'} disabled={this.state.editDisabled} onChangeText={this.handleweekendA}>
                                     
                                 </TextInput>
                             </View>
@@ -70,7 +85,12 @@ export default class UserProfile extends Component {
                     <Button
                         style={styles.saveButton} contentStyle={styles.saveButtonSize} labelStyle={{fontSize:22}}
                         onPress = {
-                            () => this.saveInfo(this.state.name, this.state.quantity, this.state.avaliability)
+                            () => {
+                                storeData(this.state.name, this.state.quantity, this.state.weekdayA, this.state.weekendA)
+                                //this.saveInfo(this.state.name, this.state.quantity, this.state.avaliability)
+                                this.handleDisabled()
+                            }
+
                         }
                     >
                         Save
@@ -78,7 +98,11 @@ export default class UserProfile extends Component {
                     <Button
                         style={styles.editButton} contentStyle={styles.saveButtonSize} labelStyle={{fontSize:22}}
                         onPress = {
-                            () => this.saveInfo(this.state.name, this.state.quantity, this.state.avaliability)
+                            () => {
+                                this.handleEnabled()
+                                getData()
+                                //this.saveInfo(this.state.name, this.state.quantity, this.state.avaliability)
+                            }
                         }
                     >
                         Edit
@@ -88,7 +112,44 @@ export default class UserProfile extends Component {
         )
     }
     
+    
 }
+
+const storeData = async (value1, value2, value3, value4) => {
+    try{
+        await AsyncStorage.setItem('name', JSON.stringify(value1))
+        await AsyncStorage.setItem('quantity', JSON.stringify(value2))
+        await AsyncStorage.setItem('weekdayA', JSON.stringify(value3))
+        await AsyncStorage.setItem('weekendA', JSON.stringify(value4))
+    } catch (e) {
+        alert('error: data could not be read')
+    }
+};
+
+const getData = async () => {
+    try {
+        const value1 = await AsyncStorage.getItem('name');
+        const value2 = await AsyncStorage.getItem('quantity');
+        const value3 = await AsyncStorage.getItem('weekdayA');
+        const value4 = await AsyncStorage.getItem('weekendA');
+        if (value1 !== null){
+            handleName(value1)
+        }
+        if (value2 !== null){
+            handleQuantity(value2)
+        }
+        if (value3 !== null){
+            handleweekdayA(value3)
+        }
+        if (value4 !== null){
+            handleweekendA(value4)
+        }
+    } catch (e) {
+        alert('failed to read input from storage')
+    }
+    
+};
+
 
     const styles = StyleSheet.create({
         container: {
