@@ -1,281 +1,182 @@
-import React, {Component, useEffect} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import { StyleSheet, Touchable, View, TouchableOpacity} from 'react-native';
 import { Provider as PaperProvider, Text, TextInput, Button } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+export default function UserProfile({navigation}){
+    const [name, setName] =  useState("johnny");
+    const [quantity, setQuantity] = useState('1');
+    const [weekdayA, setWeekDay] = useState("sometimes");
+    const [weekendA, setWeekEnd] = useState("never");
+    const [editDisabled, setEditDisabled] = useState(1);
 
-export default class UserProfile extends Component {
-    
+    const storeData = async () => {
+        try{
+            //recieves the values to store and turns them into strings, storing them in the file
+            await AsyncStorage.setItem('name', name)
+            await AsyncStorage.setItem('quantity', quantity)
+            await AsyncStorage.setItem('weekdayA', weekdayA)
+            await AsyncStorage.setItem('weekendA', weekendA)
+        } catch (e) {
+            alert('error: data could not be stored')
+        }
+    };
 
-    state = {
-        name: 'johnny',
-        quantity: '1',
-        weekdayA: 'sometimes',
-        weekendA: 'never',
-        editDisabled: 1
-    }
+    const readData = async () => {
+      try {
+          const name = await AsyncStorage.getItem('name');
+          const quantity = await AsyncStorage.getItem('quantity');
+          const weekdayA = await AsyncStorage.getItem('weekdayA');
+          const weekendA = await AsyncStorage.getItem('weekendA');
 
-    handleName = (text) => {
-        this.setState({name: text})
-    }
-    handleQuantity = (text) => {
-        this.setState({quantity: text})
-    }
-    handleweekdayA = (text) => {
-        this.setState({weekdayA: text})
-    }
-    handleweekendA = (text) => {
-        this.setState({weekendA: text})
-    }
-    handleEnabled = () => {
-        this.setState({editDisabled: 0})
-    }
-    handleDisabled = () => {
-        this.setState({editDisabled: 1})
-    }
-    saveInfo = (name, quantity, weekdayA, weekendA) => { //i think this is a dead function
-        storeData(name, quantity, weekdayA, weekendA)
-        alert('name: ' + name + ', quantity: ' + quantity + ', weekday avaliability: ' + weekdayA + ', weekend avaliability' + weekendA)
-    }
+        if (name !== null) {
+          setName(name);
+        }
+        if (quantity !== null) {
+          setQuantity(quantity);
+        }
+        if (weekdayA !== null) {
+          setWeekDay(weekdayA);
+        }
+        if (weekendA !== null) {
+          setWeekEnd(weekendA);
+        }
+      } catch (e) {
+          alert('Failed to fetch the input from storage');
+      }
+  };
 
+    useEffect(() => {
+      readData();
+    }, []);
 
-    render() {
+    return(
+        <PaperProvider>
+            <View style={styles.container}>
+                <Text style={styles.text1}>User Name</Text>
+                <TextInput
+                    style={styles.textbox1}
+                    value={name}
+                    disabled={editDisabled}
+                    onChangeText={text => setName(text)}
+                />
+                <Text style={styles.text2}>Naloxone Quantity</Text>
+                <TextInput
+                    style={styles.textbox2}
+                    value={quantity}
+                    disabled={editDisabled}
+                    onChangeText={text => setQuantity(text)}
+                />
 
-        return (
-            <PaperProvider>
-                <View style={styles.container}>
-                    <Text style={styles.text1}>User Name</Text>
-                    <TextInput
-                        style={styles.textbox1}
-                        defaultValue={this.state.name} //right now its grabbing the default value from the states above
-                        disabled={this.state.editDisabled}
-                        onChangeText={this.handleName}
-                    />
-                    <Text style={styles.text2}>Naloxone Quantity</Text>
-                    <TextInput
-                        style={styles.textbox2}
-                        defaultValue={this.state.quantity}
-                        disabled={this.state.editDisabled}
-                        onChangeText={this.handleQuantity}
-                    />
+                <View style={styles.availContainer}>
 
-                    <View style={styles.availContainer}>
+                    <View style={styles.inputContainer}>
 
-                        <View style={styles.inputContainer}>
-                            
-                            <View style={{width: '50%'}}>
-                                <Text style={styles.text1}>Weekday Availability</Text>
-                                <TextInput style={styles.textbox1} defaultValue={this.state.weekdayA} disabled={this.state.editDisabled} onChangeText={this.handleweekdayA}>
+                        <View style={{width: '50%'}}>
+                            <Text style={styles.text1}>Weekday Availability</Text>
+                            <TextInput style={styles.textbox1} value={weekdayA} disabled={editDisabled} onChangeText={text => setWeekDay(text)}>
 
-                                </TextInput>
-                            </View>
-                            <View style={{width: '50%'}}>
-                                <Text style={styles.text1}>Weekend Availability</Text>
-                                <TextInput style={styles.textbox1} defaultValue={this.state.weekendA} disabled={this.state.editDisabled} onChangeText={this.handleweekendA}>
-                                    
-                                </TextInput>
-                            </View>
-
+                            </TextInput>
                         </View>
+                        <View style={{width: '50%'}}>
+                            <Text style={styles.text1}>Weekend Availability</Text>
+                            <TextInput style={styles.textbox1} value={weekendA} disabled={editDisabled} onChangeText={text => setWeekEnd(text)}>
+
+                            </TextInput>
+                        </View>
+
                     </View>
-
-                    <Button
-                        style={styles.saveButton} contentStyle={styles.saveButtonSize} labelStyle={{fontSize:22}}
-                        onPress = {
-                            () => {
-                                // this function below is the one that takes all the info currently in the states and saves it to the json file
-                                storeData(this.state.name, this.state.quantity, this.state.weekdayA, this.state.weekendA)
-                                //this.saveInfo(this.state.name, this.state.quantity, this.state.avaliability)
-                                this.handleDisabled()
-                            }
-
-                        }
-                    >
-                        Save
-                    </Button>
-                    <Button
-                        style={styles.editButton} contentStyle={styles.saveButtonSize} labelStyle={{fontSize:22}}
-                        onPress = {
-                            () => {
-                                //for whatever reason the handle x functions dont like recieving functions so i made constants to get the values
-                                //from the json file and then pass them into the handleValue functions, this is possibly where some problem occurs
-                                const N = getName()
-                                const Q = getQuantity()
-                                const D = getweekdayA()
-                                const E = getweekendA()
-                                this.handleName(N)
-                                this.handleQuantity(Q)
-                                this.handleweekdayA(D)
-                                this.handleweekendA(E)
-                                this.handleEnabled()
-                                //getData()
-                                //this.saveInfo(this.state.name, this.state.quantity, this.state.avaliability)
-                            }
-                        }
-                    >
-                        Edit
-                    </Button>
                 </View>
-            </PaperProvider>
-        )
-    }
-    
+
+                <Button
+                    style={styles.saveButton} contentStyle={styles.saveButtonSize} labelStyle={{fontSize:22}}
+                    onPress = {
+                        () => {
+                            console.log(name);
+                            storeData();
+                            setEditDisabled(1);
+                        }
+                    }
+                >
+                    Save
+                </Button>
+                <Button
+                    style={styles.editButton} contentStyle={styles.saveButtonSize} labelStyle={{fontSize:22}}
+                    onPress = {
+                        () => {
+                            setEditDisabled(0);
+                        }
+                    }
+                >
+                    Edit
+                </Button>
+            </View>
+        </PaperProvider>
+    );
 }
-const storeData = async (value1, value2, value3, value4) => {
-    try{
-        //recieves the values to store and turns them into strings, storing them in the file
-        await AsyncStorage.setItem('name', JSON.stringify(value1))
-        await AsyncStorage.setItem('quantity', JSON.stringify(value2))
-        await AsyncStorage.setItem('weekdayA', JSON.stringify(value3))
-        await AsyncStorage.setItem('weekendA', JSON.stringify(value4))
-    } catch (e) {
-        alert('error: data could not be stored')
-    }
-};
 
-// const getData = async () => {
-//     try {
-//         const value1 = await AsyncStorage.getItem('name');
-//         const value2 = await AsyncStorage.getItem('quantity');
-//         const value3 = await AsyncStorage.getItem('weekdayA');
-//         const value4 = await AsyncStorage.getItem('weekendA');
-//         if (value1 !== null){
-//             UserProfile.handleName(value1)
-//         }
-//         if (value2 !== null){
-//             UserProfile.handleQuantity(value2)
-//         }
-//         if (value3 !== null){
-//             UserProfile.handleweekdayA(value3)
-//         }
-//         if (value4 !== null){
-//             UserProfile.handleweekendA(value4)
-//         }
-//     } catch (e) {
-//         alert('failed to read input from storage')
-//     }
-    
-// };
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#393939',
+        display: 'flex',
+        height: '100%',
+        flexDirection: 'column'
+    },
 
-//below are all the various store file functions, with alerts to indicate that the values are properly stored and read again
-const getName = async () => {
-    try {
-        const value = await AsyncStorage.getItem('name');
-        if (value !== null){
-            alert(value)
-            return (value)
-        }
-    } catch (e) {
-        alert('failed to read input from storage')
-    }
-    
-};
-const getQuantity = async () => {
-    try {
-        const value = await AsyncStorage.getItem('quantity');
-        //alert('this is a test')
-        if (value !== null){
-            alert(value)
-            return (value)
-        }
-    } catch (e) {
-        alert('failed to read input from storage')
-    }
-    
-};
-const getweekdayA = async () => {
-    try {
-        const value = await AsyncStorage.getItem('weekdayA');
-        if (value !== null){
-            alert(value)
-            return (value)
-        }
-    } catch (e) {
-        alert('failed to read input from storage')
-    }
-    
-};
-const getweekendA = async () => {
-    try {
-        const value = await AsyncStorage.getItem('weekendA');
-        if (value !== null){
-            alert(value)
-            return (value)
-        }
-    } catch (e) {
-        alert('failed to read input from storage')
-    }
-    
-};
+    textbox1: {
+        height: 40,
+        marginTop: 5,
+        marginLeft: 15,
+        marginRight: 15,
+        borderWidth: 1,
+        padding: 10
+    },
 
+    textbox2: {
+        height: 40,
+        marginTop: 5,
+        marginLeft: 15,
+        marginRight: 15,
+        borderWidth: 1,
+        padding: 10
+    },
 
+    text1:{
+        marginTop: 12,
+        marginLeft: 17,
+        marginRight: 17,
+        fontSize:15
+    },
 
+    text2:{
+        marginTop: 60,
+        marginLeft: 17,
+        marginRight: 17,
+        fontSize:15
+    },
 
+    saveButton: {
+        backgroundColor: '#7a42f4',
+        alignItems: "center",
+        marginTop: 80,
+        marginBottom: 80,
+        marginRight: 50,
+        marginLeft: 50
+    },
 
-    
+    saveButtonSize: {
+        height: 60,
+    },
 
-    const styles = StyleSheet.create({
-        container: {
-            backgroundColor: '#393939',
-            display: 'flex',
-            height: '100%',
-            flexDirection: 'column'
-        },
+    editButton: {
+        backgroundColor: '#0d7cd6',
+        alignItems: "center",
+        marginBottom: 80,
+        marginRight: 50,
+        marginLeft: 50
+    },
 
-        textbox1: {
-            height: 40,
-            marginTop: 5,
-            marginLeft: 15,
-            marginRight: 15,
-            borderWidth: 1,
-            padding: 10
-        },
+    availContainer: {display: "flex", flexDirection: "column", marginTop: 60,},
+    inputContainer: {display: "flex", flexDirection: "row"}
 
-        textbox2: {
-            height: 40,
-            marginTop: 5,
-            marginLeft: 15,
-            marginRight: 15,
-            borderWidth: 1,
-            padding: 10
-        },
-
-        text1:{
-            marginTop: 12,
-            marginLeft: 17,
-            marginRight: 17,
-            fontSize:15
-        },
-
-        text2:{
-            marginTop: 60,
-            marginLeft: 17,
-            marginRight: 17,
-            fontSize:15
-        },
-
-        saveButton: {
-            backgroundColor: '#7a42f4',
-            alignItems: "center",
-            marginTop: 80,
-            marginBottom: 80,
-            marginRight: 50,
-            marginLeft: 50
-        },
-
-        saveButtonSize: {
-            height: 60,
-        },
-
-        editButton: {
-            backgroundColor: '#0d7cd6',
-            alignItems: "center",
-            marginBottom: 80,
-            marginRight: 50,
-            marginLeft: 50
-        },
-
-        availContainer: {display: "flex", flexDirection: "column", marginTop: 60,},
-        inputContainer: {display: "flex", flexDirection: "row"}
-
-    })
+})
