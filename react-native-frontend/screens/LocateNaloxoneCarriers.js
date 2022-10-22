@@ -2,15 +2,19 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, Dimensions, Modal, Alert, Pressable, Linking, ActivityIndicator} from 'react-native';
 import { Provider as PaperProvider, Text } from 'react-native-paper';
 import MapView, {Marker, Callout} from 'react-native-maps'
+import MapViewDirections from 'react-native-maps-directions';
 
 import * as Location from 'expo-location';
 
 export default function LocateNaloxoneCarriers({navigation}){
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
-    const [carrierMarker, setMarker] = useState(null);
     const [lat, setLat] = useState(null);
     const [long, setLong] = useState(null);
+
+    let carrierLocation;
+    let text = 'Waiting..';
+    const GOOGLE_MAPS_APIKEY = 'AIzaSyANM4YHym1FVEdtDeihxSwRZmLE7VdzKn8';
 
     const createNoCarriersAlert =  () =>{
         return new Promise((resolve) =>{
@@ -26,6 +30,16 @@ export default function LocateNaloxoneCarriers({navigation}){
     }
 
     const determineCarrierLocation = () => {
+       // temp hard coded carrier location will read from file and search for closest carrier for next submission
+       let carrierMarker = {latitude: Number(lat)-0.0027, longitude: Number(long)-0.0015, title: "Joe Guy", desc: "Carrying: 3 Naloxone Doses"};
+       carrierLocation = {latitude: Number(Number(lat)-0.0027), longitude: Number(Number(long)-0.0015)};
+      
+      (async () => {
+        if(carrierMarker == null){
+          text = await createNoCarriersAlert();
+        }
+      })();
+
         if(carrierMarker){
             return (
                   <Marker
@@ -46,7 +60,7 @@ export default function LocateNaloxoneCarriers({navigation}){
                   </Marker>
             );
         }
-      }
+    }
 
     useEffect(() => {
         (async () =>{
@@ -58,27 +72,20 @@ export default function LocateNaloxoneCarriers({navigation}){
   
           let location = await Location.getCurrentPositionAsync({});
           setLocation(location);
+
+          if(location){
+            // get latitude and longitude from location object
+            setLat(Number(location['coords']['latitude']));
+            setLong(Number(location['coords']['longitude']));
+          } else {
+            //errormsg
+          }
+
         })();
   
       }, []);
   
-      useEffect(() => {
-        (async () => {
-          if(location){
-            // temp hard coded carrier location
-            setLat(Number(location['coords']['latitude']));
-            setLong(Number(location['coords']['longitude']));
-            let markerCand = {latitude: Number(location['coords']['latitude'])-0.0005, longitude: Number(location['coords']['longitude'])-0.0005, title: "Joe Guy", desc: "Carrying: 3 Naloxone Doses"};
 
-            if(markerCand == null){
-              let text = await createNoCarriersAlert();
-            }
-            setMarker(markerCand);
-          }
-        })();
-      }, [location])
-  
-      let text = 'Waiting..';
       if (errorMsg) {
         text = errorMsg;
         return (
@@ -106,6 +113,18 @@ export default function LocateNaloxoneCarriers({navigation}){
                pinColor='aqua'
              />
              {determineCarrierLocation()}
+
+             <MapViewDirections
+              origin={{
+                latitude: Number(lat),
+                longitude: Number(long)
+              }}
+              destination = {carrierLocation}
+              apikey={GOOGLE_MAPS_APIKEY}
+              strokeWidth = {3}
+              strokeColor = 'blue'
+             />
+
             </MapView>
           </View>
         );
