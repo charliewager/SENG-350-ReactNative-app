@@ -73,6 +73,7 @@ export default function HomeScreen({navigation}){
                         style={styles.shareANDprofile} contentStyle={{flexDirection: 'row-reverse'}}
                         onPress={() =>
                             navigation.navigate('User Profile')
+                            
                         }>
                         Profile
                     </Button>
