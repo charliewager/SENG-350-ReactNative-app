@@ -20,19 +20,32 @@ export default function LocateNaloxoneCarriers({navigation}){
         return new Promise((resolve) =>{
             Alert.alert(
               "No Nearby Naloxone Carriers Found",
-              "Please Contact Emergency Services and See Information Below",
+              "Please Contact Emergency Services and See Information On the Following Page",
+
               [
-                //add RequestAmbulance page
+                {text: "Ok",
+                  onPress: () => {
+                    navigation.navigate('Request Ambulance'),
+                    resolve("cancel")
+                  },
+                },
+                {text: "Cancel",
+                  onPress:  () => resolve("cancel"),
+                  onPress: () => navigation.navigate('Home'),
+                }
               ],
-              { cancelable: false } //needed?
+              { cancelable: true } //needed?
             );
         })
     }
 
     const determineCarrierLocation = () => {
        // temp hard coded carrier location will read from file and search for closest carrier for next submission
-       let carrierMarker = {latitude: Number(lat)-0.0027, longitude: Number(long)-0.0015, title: "Joe Guy", desc: "Carrying: 3 Naloxone Doses"};
-       carrierLocation = {latitude: Number(Number(lat)-0.0027), longitude: Number(Number(long)-0.0015)};
+      //  let carrierMarker = {latitude: Number(lat)-0.0027, longitude: Number(long)-0.0015, title: "Joe Guy", desc: "Carrying: 3 Naloxone Doses"};
+      //  carrierLocation = {latitude: Number(Number(lat)-0.0027), longitude: Number(Number(long)-0.0015)};
+      let carrierMarker
+       //get user data from file and put into iterable object
+       //use iterator to find user that is closest
       
       (async () => {
         if(carrierMarker == null){
@@ -82,8 +95,10 @@ export default function LocateNaloxoneCarriers({navigation}){
           }
 
         })();
+
+        determineCarrierLocation()
   
-      }, []);
+    }, []);
   
 
       if (errorMsg) {
@@ -112,7 +127,7 @@ export default function LocateNaloxoneCarriers({navigation}){
                title="Your location"
                pinColor='aqua'
              />
-             {determineCarrierLocation()}
+             {/* {determineCarrierLocation()} */}
 
              <MapViewDirections
               origin={{
