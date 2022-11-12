@@ -8,6 +8,7 @@ import RequestAmbulance from './screens/RequestAmbulance';
 import LocateNaloxoneCarriers from './screens/LocateNaloxoneCarriers';
 import LocateNaloxoneSuppliers from './screens/LocateNaloxoneSuppliers';
 import Share from './screens/Share';
+import TipsDisplay from './screens/TipsDisplay';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ export default function App() {
           <Stack.Screen name="Locate Naloxone Carriers" component={LocateNaloxoneCarriers}/>
           <Stack.Screen name="Locate Naloxone Suppliers" component={LocateNaloxoneSuppliers}/>
           <Stack.Screen name="Share" component={Share}/>
+          <Stack.Screen name="Tips Display" component={TipsDisplay}/>
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
