@@ -22,6 +22,8 @@ export default function Meth(){
                     <List.Item
                         title="Stay with the patient until help arrives"
                         titleNumberOfLines={4}
+                        titleStyle={{color: 'white'}}
+                        descriptionStyle={{color: 'white'}}
                         left={props => <List.Icon {...props} icon="chevron-double-right" />}
                     />
                 </List.Section>
@@ -31,6 +33,8 @@ export default function Meth(){
                     <List.Item
                         title="Do more meth"
                         titleNumberOfLines={4}
+                        titleStyle={{color: 'white'}}
+                        descriptionStyle={{color: 'white'}}
                         left={props => <List.Icon {...props} icon="chevron-double-right" />}
                     />
                 </List.Section>

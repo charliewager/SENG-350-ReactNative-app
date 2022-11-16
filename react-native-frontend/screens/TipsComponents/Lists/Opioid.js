@@ -20,11 +20,15 @@ export default function Opioid(){
                 <List.Item
                         title="Stay with the patient until help arrives"
                         titleNumberOfLines={4}
+                        titleStyle={{color: 'white'}}
+                        descriptionStyle={{color: 'white'}}
                         left={props => <List.Icon {...props} icon="chevron-double-right" />}
                 />
                 <List.Item
                     title="Lightly shake, tap, and shout at the patient to get a response"
                     titleNumberOfLines={4}
+                    titleStyle={{color: 'white'}}
+                        descriptionStyle={{color: 'white'}}
                     left={props => <List.Icon {...props} icon="chevron-double-right" />}
                 />
                 <List.Section>
@@ -32,6 +36,8 @@ export default function Opioid(){
                     <List.Item
                         title="Keep the patient awake and talking"
                         titleNumberOfLines={4}
+                        titleStyle={{color: 'white'}}
+                        descriptionStyle={{color: 'white'}}
                         left={props => <List.Icon {...props} icon="chevron-double-right" />}
                     />
                 </List.Section>
@@ -44,6 +50,8 @@ export default function Opioid(){
                         description="Do this by ensuring their is nothing in the patients mouth, then tilting their
                                     head back and blowing air into their mouth every 5 seconds"
                         descriptionNumberOfLines={4}
+                        titleStyle={{color: 'white'}}
+                        descriptionStyle={{color: 'white'}}
                         left={props => <List.Icon {...props} icon="chevron-double-right" />}
                     />
                     <List.Item
@@ -51,6 +59,8 @@ export default function Opioid(){
                         titleNumberOfLines={4}
                         description="Do this by pushing down hard on the chest bone at a rate of 100 beats per minute"
                         descriptionNumberOfLines={4}
+                        titleStyle={{color: 'white'}}
+                        descriptionStyle={{color: 'white'}}
                         left={props => <List.Icon {...props} icon="chevron-double-right" />}
                     />
                 </List.Section>

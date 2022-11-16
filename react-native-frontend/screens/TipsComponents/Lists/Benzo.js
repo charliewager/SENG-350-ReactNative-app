@@ -22,11 +22,15 @@ export default function Benzo(){
                     <List.Item
                         title="Stay with the patient until help arrives"
                         titleNumberOfLines={4}
+                        titleStyle={{color: 'white'}}
+                        descriptionStyle={{color: 'white'}}
                         left={props => <List.Icon {...props} icon="chevron-double-right" />}
                     />
                     <List.Item
                         title="Keep the patient awake and talking if they are concious"
                         titleNumberOfLines={4}
+                        titleStyle={{color: 'white'}}
+                        descriptionStyle={{color: 'white'}}
                         left={props => <List.Icon {...props} icon="chevron-double-right" />}
                     />
                     <List.Item
@@ -34,6 +38,8 @@ export default function Benzo(){
                         description="If the patient is unconscious do this by turning them onto their side"
                         titleNumberOfLines={4}
                         descriptionNumberOfLines={4}
+                        titleStyle={{color: 'white'}}
+                        descriptionStyle={{color: 'white'}}
                         left={props => <List.Icon {...props} icon="chevron-double-right" />}
                     />
                 </List.Section>
@@ -43,6 +49,8 @@ export default function Benzo(){
                     <List.Item
                         title="Let the patient injest additional drugs or alcohol of any sort"
                         titleNumberOfLines={4}
+                        titleStyle={{color: 'white'}}
+                        descriptionStyle={{color: 'white'}}
                         left={props => <List.Icon {...props} icon="chevron-double-right" />}
                     />
                 </List.Section>

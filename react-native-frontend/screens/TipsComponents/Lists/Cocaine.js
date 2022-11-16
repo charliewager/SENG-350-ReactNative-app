@@ -22,6 +22,8 @@ export default function Cocaine(){
                     <List.Item
                         title="Stay with the patient until help arrives"
                         titleNumberOfLines={4}
+                        titleStyle={{color: 'white'}}
+                        descriptionStyle={{color: 'white'}}
                         left={props => <List.Icon {...props} icon="chevron-double-right" />}
                     />
                     <List.Item
@@ -30,11 +32,15 @@ export default function Cocaine(){
                         pre-existing conditions, drug allergires, and age"
                         titleNumberOfLines={4}
                         descriptionNumberOfLines={4}
+                        titleStyle={{color: 'white'}}
+                        descriptionStyle={{color: 'white'}}
                         left={props => <List.Icon {...props} icon="chevron-double-right" />}
                     />
                     <List.Item
                         title="Lay the patient on their side"
                         titleNumberOfLines={4}
+                        titleStyle={{color: 'white'}}
+                        descriptionStyle={{color: 'white'}}
                         left={props => <List.Icon {...props} icon="chevron-double-right" />}
                     />
                     <List.Item
@@ -42,6 +48,8 @@ export default function Cocaine(){
                         description="This could be done with a cold compress"
                         titleNumberOfLines={4}
                         descriptionNumberOfLines={4}
+                        titleStyle={{color: 'white'}}
+                        descriptionStyle={{color: 'white'}}
                         left={props => <List.Icon {...props} icon="chevron-double-right" />}
                     />
                     <List.Item
@@ -50,6 +58,8 @@ export default function Cocaine(){
                                      means keeping them away from objects with sharp edges (such as knives) and other hazards"
                         titleNumberOfLines={4}
                         descriptionNumberOfLines={4}
+                        titleStyle={{color: 'white'}}
+                        descriptionStyle={{color: 'white'}}
                         left={props => <List.Icon {...props} icon="chevron-double-right" />}
                     />
                 </List.Section>
