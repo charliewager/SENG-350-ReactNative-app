@@ -18,20 +18,20 @@ export default function Benzo(){
         <PaperProvider>
             <View style={styles.container}>
                 <List.Section>
-                    <List.Subheader style={{fontSize:20, fontWeight: 'bold'}}>DO</List.Subheader>
+                    <List.Subheader style={{fontSize:20, fontWeight: 'bold', color: 'white'}}>DO</List.Subheader>
                     <List.Item
                         title="Stay with the patient until help arrives"
                         titleNumberOfLines={4}
                         titleStyle={{color: 'white'}}
                         descriptionStyle={{color: 'white'}}
-                        left={props => <List.Icon {...props} icon="chevron-double-right" />}
+                        left={props => <List.Icon {...props} icon="chevron-double-right" color='white'/>}
                     />
                     <List.Item
                         title="Keep the patient awake and talking if they are concious"
                         titleNumberOfLines={4}
                         titleStyle={{color: 'white'}}
                         descriptionStyle={{color: 'white'}}
-                        left={props => <List.Icon {...props} icon="chevron-double-right" />}
+                        left={props => <List.Icon {...props} icon="chevron-double-right" color='white'/>}
                     />
                     <List.Item
                         title="Ensure the patient does not choke on their own vomit"
@@ -40,18 +40,18 @@ export default function Benzo(){
                         descriptionNumberOfLines={4}
                         titleStyle={{color: 'white'}}
                         descriptionStyle={{color: 'white'}}
-                        left={props => <List.Icon {...props} icon="chevron-double-right" />}
+                        left={props => <List.Icon {...props} icon="chevron-double-right" color='white'/>}
                     />
                 </List.Section>
 
                 <List.Section>
-                    <List.Subheader style={{fontSize:20, fontWeight: 'bold'}}>DO NOT</List.Subheader>
+                    <List.Subheader style={{fontSize:20, fontWeight: 'bold', color: 'white'}}>DO NOT</List.Subheader>
                     <List.Item
                         title="Let the patient injest additional drugs or alcohol of any sort"
                         titleNumberOfLines={4}
                         titleStyle={{color: 'white'}}
                         descriptionStyle={{color: 'white'}}
-                        left={props => <List.Icon {...props} icon="chevron-double-right" />}
+                        left={props => <List.Icon {...props} icon="chevron-double-right" color='white'/>}
                     />
                 </List.Section>
             </View>

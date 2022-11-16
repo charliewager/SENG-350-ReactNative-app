@@ -18,24 +18,24 @@ export default function Meth(){
         <PaperProvider>
             <View style={styles.container}>
                 <List.Section>
-                    <List.Subheader style={{fontSize:20, fontWeight: 'bold'}}>DO</List.Subheader>
+                    <List.Subheader style={{fontSize:20, fontWeight: 'bold', color: 'white'}}>DO</List.Subheader>
                     <List.Item
                         title="Stay with the patient until help arrives"
                         titleNumberOfLines={4}
                         titleStyle={{color: 'white'}}
                         descriptionStyle={{color: 'white'}}
-                        left={props => <List.Icon {...props} icon="chevron-double-right" />}
+                        left={props => <List.Icon {...props} icon="chevron-double-right" color='white'/>}
                     />
                 </List.Section>
 
                 <List.Section>
-                    <List.Subheader style={{fontSize:20, fontWeight: 'bold'}}>DO NOT</List.Subheader>
+                    <List.Subheader style={{fontSize:20, fontWeight: 'bold', color: 'white'}}>DO NOT</List.Subheader>
                     <List.Item
                         title="Do more meth"
                         titleNumberOfLines={4}
                         titleStyle={{color: 'white'}}
                         descriptionStyle={{color: 'white'}}
-                        left={props => <List.Icon {...props} icon="chevron-double-right" />}
+                        left={props => <List.Icon {...props} icon="chevron-double-right" color='white'/>}
                     />
                 </List.Section>
             </View>

@@ -18,13 +18,13 @@ export default function Cocaine(){
         <PaperProvider>
             <View style={styles.container}>
                 <List.Section>
-                    <List.Subheader style={{fontSize:20, fontWeight: 'bold'}}>DO</List.Subheader>
+                    <List.Subheader style={{fontSize:20, fontWeight: 'bold', color: 'white'}}>DO</List.Subheader>
                     <List.Item
                         title="Stay with the patient until help arrives"
                         titleNumberOfLines={4}
                         titleStyle={{color: 'white'}}
                         descriptionStyle={{color: 'white'}}
-                        left={props => <List.Icon {...props} icon="chevron-double-right" />}
+                        left={props => <List.Icon {...props} icon="chevron-double-right" color='white'/>}
                     />
                     <List.Item
                         title="Try to gather info about the patient"
@@ -34,14 +34,14 @@ export default function Cocaine(){
                         descriptionNumberOfLines={4}
                         titleStyle={{color: 'white'}}
                         descriptionStyle={{color: 'white'}}
-                        left={props => <List.Icon {...props} icon="chevron-double-right" />}
+                        left={props => <List.Icon {...props} icon="chevron-double-right" color='white'/>}
                     />
                     <List.Item
                         title="Lay the patient on their side"
                         titleNumberOfLines={4}
                         titleStyle={{color: 'white'}}
                         descriptionStyle={{color: 'white'}}
-                        left={props => <List.Icon {...props} icon="chevron-double-right" />}
+                        left={props => <List.Icon {...props} icon="chevron-double-right" color='white'/>}
                     />
                     <List.Item
                         title="Cool the patient down if they are overheated"
@@ -50,7 +50,7 @@ export default function Cocaine(){
                         descriptionNumberOfLines={4}
                         titleStyle={{color: 'white'}}
                         descriptionStyle={{color: 'white'}}
-                        left={props => <List.Icon {...props} icon="chevron-double-right" />}
+                        left={props => <List.Icon {...props} icon="chevron-double-right" color='white'/>}
                     />
                     <List.Item
                         title="Keep the patient in a safe environment"
@@ -60,7 +60,7 @@ export default function Cocaine(){
                         descriptionNumberOfLines={4}
                         titleStyle={{color: 'white'}}
                         descriptionStyle={{color: 'white'}}
-                        left={props => <List.Icon {...props} icon="chevron-double-right" />}
+                        left={props => <List.Icon {...props} icon="chevron-double-right" color='white'/>}
                     />
                 </List.Section>
             </View>

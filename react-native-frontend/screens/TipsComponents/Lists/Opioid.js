@@ -22,28 +22,28 @@ export default function Opioid(){
                         titleNumberOfLines={4}
                         titleStyle={{color: 'white'}}
                         descriptionStyle={{color: 'white'}}
-                        left={props => <List.Icon {...props} icon="chevron-double-right" />}
+                        left={props => <List.Icon {...props} icon="chevron-double-right" color='white'/>}
                 />
                 <List.Item
                     title="Lightly shake, tap, and shout at the patient to get a response"
                     titleNumberOfLines={4}
                     titleStyle={{color: 'white'}}
                         descriptionStyle={{color: 'white'}}
-                    left={props => <List.Icon {...props} icon="chevron-double-right" />}
+                    left={props => <List.Icon {...props} icon="chevron-double-right" color='white'/>}
                 />
                 <List.Section>
-                    <List.Subheader style={{fontSize:20, fontWeight: 'bold'}}>IF RESPONSIVE</List.Subheader>
+                    <List.Subheader style={{fontSize:20, fontWeight: 'bold', color: 'white'}}>IF RESPONSIVE</List.Subheader>
                     <List.Item
                         title="Keep the patient awake and talking"
                         titleNumberOfLines={4}
                         titleStyle={{color: 'white'}}
                         descriptionStyle={{color: 'white'}}
-                        left={props => <List.Icon {...props} icon="chevron-double-right" />}
+                        left={props => <List.Icon {...props} icon="chevron-double-right" color='white'/>}
                     />
                 </List.Section>
 
                 <List.Section>
-                    <List.Subheader style={{fontSize:20, fontWeight: 'bold'}}>IF UNRESPONSIVE</List.Subheader>
+                    <List.Subheader style={{fontSize:20, fontWeight: 'bold', color: 'white'}}>IF UNRESPONSIVE</List.Subheader>
                     <List.Item
                         title="Help the patient breath if they not currently breathing"
                         titleNumberOfLines={4}
@@ -52,7 +52,7 @@ export default function Opioid(){
                         descriptionNumberOfLines={4}
                         titleStyle={{color: 'white'}}
                         descriptionStyle={{color: 'white'}}
-                        left={props => <List.Icon {...props} icon="chevron-double-right" />}
+                        left={props => <List.Icon {...props} icon="chevron-double-right" color='white'/>}
                     />
                     <List.Item
                         title="Preform CPR if the patients pulse disappears"
@@ -61,7 +61,7 @@ export default function Opioid(){
                         descriptionNumberOfLines={4}
                         titleStyle={{color: 'white'}}
                         descriptionStyle={{color: 'white'}}
-                        left={props => <List.Icon {...props} icon="chevron-double-right" />}
+                        left={props => <List.Icon {...props} icon="chevron-double-right" color='white'/>}
                     />
                 </List.Section>
             </View>
