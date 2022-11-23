@@ -43,15 +43,22 @@ def send_help_notification():
     recipient = request.json.get('recipient')
     drugtype = request.json.get('drugtype')
 
-    if not location or not recipient or not drugtype:
+    if not location or not recipient:
         abort(400)
 
-    for user in users:
-        if user['name'] == recipient:
-            send(f"Someone is overdosing on {drugtype} at this location, {location}", user['phone'])
-            return "sent"
+    if not drugtype:
+        for user in users:
+            if user['name'] == recipient:
+                send(f"Someone is overdosing on an unknown drug at this location, {location}", user['phone'])
+                return "sent"
+        return "recipient not found"
+    else:
+        for user in users:
+            if user['name'] == recipient:
+                send(f"Someone is overdosing on {drugtype} at this location, {location}", user['phone'])
+                return "sent"
 
-    return "recipient not found"
+        return "recipient not found"
 
 
 def send(message, to):
