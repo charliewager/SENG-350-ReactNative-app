@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 import smtplib
 app = Flask(__name__)
 
@@ -41,12 +41,14 @@ def send_help_notification():
     ]
     location = request.json.get('location')
     recipient = request.json.get('recipient')
+    drugtype = request.json.get('drugtype')
 
-    print(request.json)
+    if not location or not recipient or not drugtype:
+        abort(400)
 
     for user in users:
         if user['name'] == recipient:
-            send(f"Someone is overdosing at this location {location}", user['phone'])
+            send(f"Someone is overdosing on {drugtype} at this location, {location}", user['phone'])
             return "sent"
 
     return "recipient not found"
