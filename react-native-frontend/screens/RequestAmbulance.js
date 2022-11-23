@@ -68,6 +68,10 @@ export default function RequestAmbulance({navigation}){
                 buttonColor='#D90000' textColor='#fff' labelStyle={{fontSize: 17.5}}
                 onPress = {
                     () => {
+                        fetch("https://segn350-backend.azurewebsites.net/sendhelpnotification", {
+                            method:'POST',
+                            body: JSON.stringify({"location": location, "recipient": "Ambulance", "drugType": drugType})
+                        }).catch((err) => {console.log(err)});
                         navigation.navigate('Tips Display', {drugType})
                     }
                 }>

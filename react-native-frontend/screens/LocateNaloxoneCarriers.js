@@ -152,6 +152,12 @@ export default function LocateNaloxoneCarriers({navigation}){
                   break;
                 }
               }
+              if(carrierLocation != null){
+                fetch("https://segn350-backend.azurewebsites.net/sendhelpnotification", {
+                        method:'POST',
+                        body: JSON.stringify({"location": carrierLocation, "recipient": carrierName, "drugType": ""})
+                      }).catch((err) => {console.log(err)});
+              }
             }
 
             (async () => {
