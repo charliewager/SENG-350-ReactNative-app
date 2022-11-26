@@ -17,59 +17,10 @@ export default function LocateNaloxoneCarriers({navigation}){
     const [carrierTitle, setcarrierTitle] = useState(null);
     const [clat, setcLat] = useState(null);
     const [clong, setcLong] = useState(null);
+    const [Users, setUsers] = useState([]);
 
     let text = 'Waiting..';
     const GOOGLE_MAPS_APIKEY = 'AIzaSyANM4YHym1FVEdtDeihxSwRZmLE7VdzKn8';
-
-
-    //////// For prototype, until backend/database is setup /////////
-    const UserOne = {
-      name: "Maria",
-      naloxoneQuantity: 3,
-      location:{
-        latitude: Number(48.4527997-0.0156),
-        longitude: Number(-123.3646428-0.0099),
-      },
-      isAvailable: true
-    };
-    const UserTwo = {
-      name: "Mohammed",
-      naloxoneQuantity: 0,
-      location:{
-        latitude: Number(48.4526994-0.0002),
-        longitude: Number(-123.3646428-0.0001)
-      },
-      isAvailable: true
-    };
-    const UserThree = {
-      name: "Wei",
-      naloxoneQuantity: 1,
-      location:{
-        latitude: Number(48.4526994-0.0001),
-        longitude: Number(-123.3646428-0.0001)
-      },
-      isAvailable: false
-    };
-    const UserFour = {
-      name: "Ana",
-      naloxoneQuantity: 2,
-      location:{
-        latitude: Number(48.4526994-0.0190),
-        longitude: Number(-123.3646428-0.0200)
-      },
-      isAvailable: true
-    };
-    const UserFive = {
-      name: "John",
-      naloxoneQuantity: 3,
-      location:{
-        latitude: Number(48.4526994-0.0001),
-        longitude: Number(-123.3646428-0.0001)
-      },
-      isAvailable: true
-    };
-    let Users = [UserOne, UserTwo, UserThree, UserFour, UserFive];
-    /////////////////////////////////////////////////////////////////
 
     const createNoCarriersAlert =  () =>{
         return new Promise((resolve) =>{
@@ -128,6 +79,12 @@ export default function LocateNaloxoneCarriers({navigation}){
           let location = await Location.getCurrentPositionAsync({});
           setLocation(location);
           let found = false;
+
+          const response = await fetch("https://segn350-backend.azurewebsites.net/findcarriers").catch((err) => {console.log(err)});
+          const userCands = await response.json();
+
+          setUsers(userCands);
+          console.log(userCands);
           if(location){
             // get latitude and longitude from location object
             setLat(Number(location['coords']['latitude']));
@@ -139,10 +96,10 @@ export default function LocateNaloxoneCarriers({navigation}){
             if(carrierLocation == null){
               let coord = {latitude: Number(location['coords']['latitude']), longitude: Number(location['coords']['longitude'])}
 
-              for(let user of Users){
-
+              for(let user of userCands){
+                console.log(user);
                 let dist = getDistance(coord, user.location);
-                if(user.naloxoneQuantity > 0 && dist/1000 <= 100){
+                if(user.naloxoneQuantity > 0 && dist/1000 <= 10){
                   setcarrierTitle(user.name);
                   setcarrierName("Carrying: " + user.naloxoneQuantity + " Naloxone Doses");
                   setcLat(Number(user.location.latitude));
