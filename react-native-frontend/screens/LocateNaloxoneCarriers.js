@@ -142,21 +142,25 @@ export default function LocateNaloxoneCarriers({navigation}){
               for(let user of Users){
 
                 let dist = getDistance(coord, user.location);
-                if(user.naloxoneQuantity > 0 && dist/1000 <= 10){
+                if(user.naloxoneQuantity > 0 && dist/1000 <= 100){
                   setcarrierTitle(user.name);
                   setcarrierName("Carrying: " + user.naloxoneQuantity + " Naloxone Doses");
                   setcLat(Number(user.location.latitude));
                   setcLong(Number(user.location.longitude));
                   setCarrierLocation(user.location);
                   found = true;
+                  fetch("https://segn350-backend.azurewebsites.net/sendhelpnotification", {
+                          method:'POST',
+                          body: JSON.stringify({"location": String(user.location.latitude) + " " + String(user.location.longitude), "recipient": user.name}),
+                          headers:{
+                            "Content-Type": "application/json",
+                          }
+                        }).catch((err) => {console.log(err)});
                   break;
                 }
               }
               if(carrierLocation != null){
-                fetch("https://segn350-backend.azurewebsites.net/sendhelpnotification", {
-                        method:'POST',
-                        body: JSON.stringify({"location": carrierLocation, "recipient": carrierName, "drugType": ""})
-                      }).catch((err) => {console.log(err)});
+                console.log("here");
               }
             }
 
