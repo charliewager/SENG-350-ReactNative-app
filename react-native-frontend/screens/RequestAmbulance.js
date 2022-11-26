@@ -46,7 +46,7 @@ export default function RequestAmbulance({navigation}){
 
     return (
         <PaperProvider>
-            <View style={styles.container}>  
+            <View style={styles.container}>
                 <Text style={styles.text}>Location</Text>
                 <TextInput style={styles.textInput}
                 UnderlineColor = '#333332'
@@ -64,13 +64,17 @@ export default function RequestAmbulance({navigation}){
                 placeholder = 'Unknown'
                 />
 
-                <Button mode = 'contained' style = {styles.button} 
+                <Button mode = 'contained' style = {styles.button}
                 buttonColor='#D90000' textColor='#fff' labelStyle={{fontSize: 17.5}}
                 onPress = {
-                    () => {
+                     () => {
+                        let requestBody = {"location": location, "recipient": "John", "drugType": drugType};
                         fetch("https://segn350-backend.azurewebsites.net/sendhelpnotification", {
                             method:'POST',
-                            body: JSON.stringify({"location": location, "recipient": "Ambulance", "drugType": drugType})
+                            body: JSON.stringify(requestBody),
+                            headers:{
+                              "Content-Type": "application/json",
+                            }
                         }).catch((err) => {console.log(err)});
                         navigation.navigate('Tips Display', {drugType})
                     }
