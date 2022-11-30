@@ -51,14 +51,14 @@ def send_help_notification():
             if user['name'] == recipient:
                 send(f"Someone is overdosing on an unknown drug at this location, {location}", user['phone'])
                 return "sent"
-        abort(404)
+        abort(204)
         return "recipient not found"
     else:
         for user in users:
             if user['name'] == recipient:
                 send(f"Someone is overdosing on {drugtype} at this location, {location}", user['phone'])
                 return "sent"
-        abort(404)
+        abort(204)
         return "recipient not found"
 
 
